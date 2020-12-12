@@ -1,8 +1,10 @@
 package kz.msovet.springapp;
 
+import java.util.List;
+
 /**
  * @author msovet
  */
 public interface Music {
-    String getSong();
+    List<String> getSong();
 }

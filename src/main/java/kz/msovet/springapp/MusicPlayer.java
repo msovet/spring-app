@@ -1,32 +1,40 @@
 package kz.msovet.springapp;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Random;
+
+@Component
 public class MusicPlayer {
-    private Music music;
-
+    private Music music1;
+    private Music music2;
+    @Value("${musicPlayer.name}")
     private String name;
-    private int duration;
+    @Value("${musicPlayer.duration}")
+    private String duration;
 
-    public String getName() {
-        return name;
+    @Autowired
+    public MusicPlayer(@Qualifier("rockMusic") Music music1,
+                       @Qualifier("classicalMusic") Music music2){
+        this.music1 = music1;
+        this.music2 = music2;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String playMusic(MusicType musicTypeEnum) {
+        MusicType musicType = musicTypeEnum.getRandomType();
+        Random random = new Random();
 
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public void setMusic(Music music) {
-        this.music = music;
-    }
-
-    public void playMusic() {
-        System.out.println("Playing: " + music.getSong());
+        if (musicType == MusicType.CLASSICAL) {
+            int index = random.nextInt(music1.getSong().size());
+            return music1.getSong().get(index);
+        } else {
+            int index = random.nextInt( music2.getSong().size());
+            return music2.getSong().get(index);
+        }
     }
 }

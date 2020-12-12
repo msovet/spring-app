@@ -1,23 +1,30 @@
 package kz.msovet.springapp;
 
+
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 public class ClassicalMusic implements Music {
-    private ClassicalMusic() {}
-
-    public static ClassicalMusic getClassicalMusic() {
-        System.out.println("AHHAHAHHAH");
-        return new ClassicalMusic();
+    @PostConstruct
+    public void init() {
+        System.out.println("Init Class");
     }
-
-    public void onInit() {
-        System.out.println("Doing my inititialization");
+    @PreDestroy
+    public void destroy() {
+        System.out.println("Destroy Class");
     }
-
-    public void onDestroy() {
-        System.out.println("Destroy!!!!");
-    }
-
     @Override
-    public String getSong() {
-        return "Bethovennin oleni";
+    public List<String> getSong() {
+        List<String> songs = new ArrayList<String>();
+        songs.add("Bethoven");
+        songs.add("Bah");
+        songs.add("Murakami");
+
+        return songs;
     }
 }
