@@ -1,3 +1,2 @@
 # spring-app
-spring app
-crud basic
+neil alishev course tutorial app
